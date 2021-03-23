@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>有效的数独</h1>
+    <script>
+      function isValidSudoku(arr) {
+        // box_index = Math.floor(row / 3) * 3 + Math.floor(columns / 3);
+        // 判断 每个格子的数据是都在 行，列，子数独中都是唯一的
+        // 创建 三个数组容器，分别存放 行, 列，子数独，在存放之前要分别判断数字是否在三个容器中
+        const rows = [[], [], [], [], [], [], [], [], []];
+        const columns = [[], [], [], [], [], [], [], [], []];
+        const boxs = [[], [], [], [], [], [], [], [], []];
+        for (let row = 0; row < 9; row++) {
+          for (let column = 0; column < 9; column++) {
+            // 每个格子 arr[row][column];
+            let item = arr[row][column];
+            // 如果元是 . 则跳过循环
+            if(item === '.'){
+              continue;
+            }
+
+            // 当前元素在哪个格子中
+            const box_index = Math.floor(row / 3) * 3 + Math.floor(column / 3);
+
+            // 如果当前数字已出现在数独的规则内，则结束循环
+            if(rows[row].indexOf(item) > -1 || columns[column].indexOf(item) > -1 || boxs[box_index].indexOf(item) > -1 ){
+              console.log('重复数字',item);
+              console.log(rows[row].indexOf(item), columns[column].indexOf(item), boxs[box_index].indexOf(item));
+              return false;
+            } 
+            // 当前元素放入行
+            rows[row].push(item);
+            // 当前元素放入列
+            columns[column].push(item);
+            // 当前元素放入子数独
+            boxs[box_index].push(item);
+          }
+        }
+        return true;
+      }
+
+      const arr1 = [
+        ["5","3",".",".","7",".",".",".","."],
+        ["6",".",".","1","9","5",".",".","."],
+        [".","9","8",".",".",".",".","6","."],
+        ["8",".",".",".","6",".",".",".","3"],
+        ["4",".",".","8",".","3",".",".","1"],
+        ["7",".",".",".","2",".",".",".","6"],
+        [".","6",".",".",".",".","2","8","."],
+        [".",".",".","4","1","9",".",".","5"],
+        [".",".",".",".","8",".",".","7","9"]
+      ];
+      console.log(isValidSudoku(arr1));
+      const arr2 = [
+        ["8","3",".",".","7",".",".",".","."],
+        ["6",".",".","1","9","5",".",".","."],
+        [".","9","8",".",".",".",".","6","."],
+        ["8",".",".",".","6",".",".",".","3"],
+        ["4",".",".","8",".","3",".",".","1"],
+        ["7",".",".",".","2",".",".",".","6"],
+        [".","6",".",".",".",".","2","8","."],
+        [".",".",".","4","1","9",".",".","5"],
+        [".",".",".",".","8",".",".","7","9"]
+      ];
+      console.log(isValidSudoku(arr2));
+    </script>
+  </body>
+</html>

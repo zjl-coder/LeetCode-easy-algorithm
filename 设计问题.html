@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>打乱数组</h1>
+  打乱之后还能还原，存一份数组的快照（深度复制数组）
+  <ul>
+    <li>
+      暴力取，调用Math.random 每次取得一个数组的下标，取出过的就删除元素避免重复取
+      <ul>
+        <li>时间复杂度： O(n^2) 乘方时间复杂度来自于 list.remove（list.pop）添加删除。每次操作都是线性时间的，总共发生 nn 次。
+        </li>
+        <li>空间复杂度： O(n)</li>
+      </ul>
+    </li>
+    <li>洗牌法：遍历一次数组，每次迭代都取一个随机数下标（random）跟当前下标元素交换 时间空间都是O(n)</li>
+  </ul>
+  <h1>最小栈·设计一个支持 push ，pop ，top 操作，并能在常数时间内检索到最小元素的栈。</h1>
+  <ul>
+    <li>使用两个栈，当有一个元素push 进来时，就排好队，小的在上面，大的在下面，这样每次getmin 就是第一个，pop掉也不用重排</li>
+  </ul>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <ul>
+      每天都有两种状态
+      <li>
+        今天手里没有股票
+        <ul>
+          <li>
+            昨天就没有股票（昨天卖掉或者更早之前卖掉，总之昨天结束前没有了），
+            今天的收益跟昨天收益一样 dp[i][0] = dp[i-1][0];
+          </li>
+          <li>
+            今天卖掉了(昨天一定是有股票的，否则今天没有股票可以卖)，
+            今天的收益是昨天收益加今天卖掉的股票价格 dp[i][0] = dp[i-1][1] + prices[i]
+          </li>
+          <li>
+            <strong>
+              今天盈利的最大点是上面两种取最大值 Math.max();有可能今天卖掉的收益更好，也有可能是更早之前
+            </strong>
+          </li>
+        </ul>
+      </li>
+      <li>
+        今天手里有股票
+        <ul>
+          <li>
+            昨天手里就有股票（可能是昨天买的，也有可能更早之前买的，总之昨天结束前手里有股票），
+            今天的收益跟昨天的收益一样 dp[i][1] = dp[i-1][1];
+          </li>
+          <li>
+            今天买的，(昨天手里一定没有股票，否则今天是没法买的)
+            今天的收益是昨天收益减去今天的股价，dp[i][1] = dp[i-1][0] - prices[i];
+          </li>
+          <li>
+            <strong>
+              今天盈利的最大点是上面两种取最大值 Math.max();
+            </strong>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <ul>
+      <li>第一天买或者不买</li>
+      <li>买的话，亏钱，第二天卖掉亏钱或者赚钱，或者不亏赚</li>
+      <li>不买的话，第二天要么买，要么也不买</li>
+      <li>第二天买的话，亏钱，第三天卖掉亏钱或者赚钱，或者不亏赚</li>
+      <li>第二天不买的话，不会亏钱，第三天买或者不买</li>
+    </ul>
+    <script>
+      const prices = [5, 4, 3, 2, 1, 1, 2, 3, 4, 5, 6, 5, 4, 3];
+      const day = prices.length; // 交易的总天数
+      const dp = [];
+      dp[0] = [];
+      dp[0][0] = 0; // 第一天无买入的收益
+      dp[0][1] = -prices[0]; // 第一天有买入的收益
+      for (let i = 1; i < day; i++) {
+        // 声明数组
+        dp[i] = [];
+        // 今天手中没有股票的收益
+        // 昨天没有买入股票 和  昨天买入股票后手里的收益+今天的价格
+        // 如果昨天的价格比今天的低，dp[i - 1][0] < dp[i - 1][1] + prices[i]，则昨天买入然后今天卖出更加划算
+        // 如果昨天的价格比今天的高，dp[i - 1][0] > dp[i - 1][1] + prices[i]，则昨天卖出更加划算
+        dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prices[i]); 
+        // 今天手中有股票的收益，
+        // 昨天手里就有股票的收益（假设是昨天买入的） 和 昨天手里没有股票但是今天买进的股票
+        // 如果昨天的买入价比今天低，则 dp[i - 1][1] > dp[i - 1][0] - prices[i]，昨天买入更加划算
+        // 如果昨天的买入价比今天高，则 dp[i - 1][1] < dp[i - 1][0] - prices[i]，今天买入更加划算
+        dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] - prices[i]); 
+      }
+      console.log(dp);
+    </script>
+  </body>
+</html>

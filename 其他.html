@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>位1的个数</h1>
+  <ul>
+    <li>遍历 （32次，因为32位），逻辑与 ， 二进制数 & 1 != 0 则累计1，然后二进制数《=1 左移一位</li>
+    <li>循环，  n = n & (n-1) , n不等于0，则累计，直到n==0结束循环</li>
+  </ul>
+  <h1>有效的括号</h1>
+  <ul>
+    <li>入栈，要入栈前先判断栈顶的元素跟当前元素是否配对，配对则弹出栈顶元素，遍历完字符串之后，如果栈里面没有字符，则是正确括号</li>
+  </ul>
+  <h1>缺失的数字</h1>
+  <ul>
+    <li>排序，然后判断0是否在首位，n是否在末位，当前元素 arr[x]+1 === arr[x+1] 是否相等，不等则元素是 arr[x]+1</li>
+    <li>哈希表，创建一个0-n的哈希表，每个元素的次数为0，遍历数组，出现的元素就在哈希表对应的次数加1，最后找出次数为0的那个</li>
+    <li>异或运算，创建一个 0-n 完整的数组，与原数组逐个异或，剩下的那个就是缺失的，这道题与（数组题，只出现一次的数字，其余每个元素均出现两次）一样</li>
+  </ul>
+</body>
+</html>

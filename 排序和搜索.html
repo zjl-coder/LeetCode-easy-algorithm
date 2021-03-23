@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>合并两个有序数组</h1>
+  <ul>
+    <li>直接合并后排序</li>
+    <li>双指针法：创建一个新队列，两个指针分别指向两个数组的头，对比，小的先入队列，并且移动小的指针</li>
+    <li>双指针法：一个指针指p1向第一个数组的前一个p1+1 指向第一个，第二个指针指p2向第二个数组的第一个元，对比p1+1 和 p2，找到p2可以插入的地方(p1小于等于p2小于等于p1+1)的地方，然后p1移动一位，如果没有，则继续移动p1</li>
+  </ul>
+  <h1>第一个错误的版本</h1>
+  <ul>
+    <li>遍历</li>
+    <li>二分查找，如果mid是错误版本，则判断mid -1 是否错误版本，不是则抛出mid ，否则查找上半段-1个元素（因为已经判断过了），如果mid正常，则判断mid+1，如果是，则抛出，否则判断下半段 -1个元素（已经判断过了）</li>
+  </ul>
+</body>
+</html>

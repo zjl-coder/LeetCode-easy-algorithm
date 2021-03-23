@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>test</title>
+    <script>
+      function showTime() {
+        const d = document.createElement('div');
+        d.innerText = new Date().toLocaleTimeString();
+        document.body.appendChild(d);
+      }
+    </script>
+  </head>
+  <body onload="showTime()">
+    <script>
+      const arr = [1, 2, 5, 0, 5, 4, -1, -4, 9, 6, 7, 10, 5, 7, 0, 8];
+      // 冒泡排序
+      function bubbleSort(data) {
+        const length = arr.length - 1;
+        for (let i = 0; i < length; i++) {
+          for (let j = 0; j < length - i; j++) {
+            if (data[j] > data[j + 1]) {
+              let temp = data[j];
+              data[j] = data[j + 1];
+              data[j + 1] = temp;
+            }
+          }
+        }
+        return data;
+      }
+      console.log('冒泡排序', bubbleSort(arr));
+
+      // 快速排序
+      const quickSortData = [1, 2, 5, 0, 5, 4, -1, -4, 9, 6, 7, 10, 5, 7, 0, 8];
+      function quickSort(data) {
+        if (data.length <= 1) {
+          return data;
+        }
+        const middleIndex = Math.floor((data.length - 1) / 2);
+        const mid = [];
+        const left = [];
+        const right = [];
+
+        for (let i = 0; i < data.length; i++) {
+          if (data[i] === data[middleIndex]) {
+            mid.push(data[i]);
+          } else if (data[i] > data[middleIndex]) {
+            right.push(data[i]);
+          } else if (data[i] < data[middleIndex]) {
+            left.push(data[i]);
+          }
+        }
+        return quickSort(left).concat(mid, quickSort(right));
+      }
+      console.log('快速排序', quickSort(quickSortData));
+
+      // 插入排序
+      const insertData = [1, 2, 5, 0, 5, 4, -1, -4, 9, 6, 7, 10, 5, 7, 0, 8];
+      function insertSort(data) {
+        const length = data.length;
+        for (let i = 1; i < length; i++) {
+          let preIndex = i - 1;
+          const current = data[i];
+          while (preIndex >= 0 && data[preIndex] > current) {
+            data[preIndex + 1] = data[preIndex];
+            preIndex --;
+          }
+          data[preIndex + 1] = current
+        }
+        return data;
+      }
+      console.log('插入排序', insertSort(insertData));
+
+      // 二分查找
+      const data = [1, 2, 5, 0, 5, 4, -1, -4, 9, 6, 7, 10, 5, 7, 0, 8];
+      function sortBar(a, b) {
+        return a - b;
+      }
+      data.sort(sortBar);
+      console.log('sort排序', data);
+      // 递归法
+      function binarySearch(data, key, startIndex, endIndex) {
+        // 向下取整
+        let length = Math.floor((startIndex + endIndex) / 2);
+        if (key === data[length]) {
+          return length;
+        } else if (key > data[length]) {
+          startIndex = length + 1;
+        } else if (key < data[length]) {
+          endIndex = length - 1;
+        }
+        return binarySearch(data, key, startIndex, endIndex);
+      }
+      const key = 4;
+      console.log(`二分查找：${key}， 位置：${binarySearch(data, key, 0, data.length - 1)}`);
+      //非递归法
+      function binarySearchByFor(data, key) {
+        let start = 0;
+        let end = data.length - 1;
+        while (start <= end) {
+          const mid = Math.floor((start + end) / 2);
+          if (key === data[mid]) {
+            return mid;
+          } else if (key > data[mid]) {
+            start = mid + 1;
+          } else if (key < data[mid]) {
+            end = mid - 1;
+          }
+        }
+        return null;
+      }
+      console.log(`二分查找：${key}， 位置：${binarySearchByFor(data, key)}`);
+    </script>
+  </body>
+</html>

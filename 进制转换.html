@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>进制转换</h1>
+    <ul>
+      <li>十进制转其他进制 使用 toString()</li>
+      <li>其他进制转十进制 使用 parseInt()</li>
+    </ul>
+    <script>
+      // 十进制转二进制
+      const ten = 1000;
+      const tow = ten.toString(2);
+      console.log('十转二', ten, tow);
+      // 二转十
+      const ten1 = parseInt(tow, 2);
+      console.log('二转十', tow, ten1);
+      // 十进制转32进制
+      const thirty_two = ten.toString(32);
+      console.log('十转三十二', ten, thirty_two);
+    </script>
+  </body>
+</html>

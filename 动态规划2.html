@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>爬楼梯</h1>
+    <ul>
+      <li>
+        动态规划：站在当前i阶梯的方式有两种，一种是 i-1阶梯 + 1 上来的，一种是 i-2+ 2的方式上来的
+      </li>
+      <li>当前i梯上来的总方式为 sum[i] = sum[i-1] + sum[i-2]</li>
+    </ul>
+    <h1>买卖股票的最佳时机</h1>
+    <ul>
+      <li>
+        暴力循环，数组中的每个元素都可以当做买入价格，后面的价格减去当前的价格
+        判断出差值最大的那个（2个for循环）
+      </li>
+      <li>
+        一次遍历：假设 第一天是买入的最低点 minprice = price[0] 那么 prices[i] - minprice 如果大于
+      </li>
+    </ul>
+    <h1>买卖股票的最佳时机 ||</h1>
+    <ul>
+      <li>
+        动态规划：
+        <ul>
+          <li>sum来存储每次股票交易的最大收益</li>
+          <li>sum[i][0]表示没有股票的收益，sum[i][1]表示有股票的收益</li>
+          <li>
+            今天手里没有股票，可能是今天卖掉了，也可能是昨天就没有股票了 那么 sum[i][0] =
+            Math.max(sum[i-1][1]+price[i], sum[i-1][0])
+          </li>
+          <li>
+            Math.max(sum[i-1][1]+price[i], sum[i-1][0])
+            <ul>
+              <li>假设昨天有股票，则昨天剩余的收益 + 今天卖掉的价格 就是总收益</li>
+              <li>假设昨天手里就没有股票了，则今天的总收益就是昨天的总收益</li>
+              <li>
+                对比两个总收益哪个更大，选哪个（不一定就是sum[i-1][1]+price[i]，因为有可能是昨天买入的价格高，今天卖出的价格低，那还不如昨天不买）
+              </li>
+            </ul>
+          </li>
+          <li>
+            今天手里有股票，可能是今天买入的，也有可能是昨天就有了，那么 sum[i][1] =
+            Math.max(sum[i-1][1], sum[i-1][0]-price[i])
+          </li>
+          <li>
+            sum[i-1][1] 说明历史就有买入的，sum[i-1][0]
+            说明历史还没买入，所以今天买入的价格可能成本比历史更低，也有可能更高
+          </li>
+        </ul>
+      </li>
+      <li>
+        贪心算法：将交易分割成最小区间（前一天买入，今天卖出），保证相邻一天买入卖出价格差大于0即可作为累加收益
+        Math.max(0, prices[i] - prices[i - 1])
+      </li>
+    </ul>
+    <h1>最大子序和</h1>
+    <ul>
+      <li>
+        循环：用一个maxsum 记录目前的最大值，sum 临时记录累加的和，每迭代一次，就更新maxsum =
+        Math.max(maxsum, sum)，如果出现sum 小于 0; 则sum = 0; 因为sum为负数，是累赘
+        <ul>
+          如果需要返回下标，则需要两个游标， 一个是记录开始位置，一个是记录结束位置，每次更新maxsum
+          的时候，存在对应的 start 和 end， 所以需要 youbiao1 youbiao2 start end maxsum 和临时累计的
+          sum 六个变量
+        </ul>
+      </li>
+      <li>
+        动态规划：当前累积的临时最大值 sum = (sum + i,
+        i);即累计的值加上当前值之后比当前值还小，则说明累计的值小于0，取当前值，否则取sum+1; maxsum
+        = Math.max(sum, maxsum) 当前累计值与记录的最大值对比
+      </li>
+    </ul>
+    <h1>打家劫舍</h1>
+    <li>
+      <div>每家的价格数组 p</div>
+      <div>动态规划：打劫了第i家，则不能打劫i-1家</div>
+      <ul>
+        <li>sum 数组存放着每次打劫完的总收益</li>
+        <li>打劫第i家的收益：sum[i-1] + p[i]</li>
+        <li>不打劫第i家的收益 sum[i-1]</li>
+        <li>一间屋子：sum[0] = p[0]</li>
+        <li>两间屋子：sum[1] = Math.max(p[0], p[1])</li>
+        <li>sum[i] = Math.max(sum[i-2] + p[i], sum[i-1])</li>
+      </ul>
+    </li>
+    <script>
+      // 爬楼梯
+      function palouti(n) {
+        const sum = []; // 存每个阶梯上来的方式总数
+        if (n <= 1) {
+          return 1;
+        }
+        // 第0阶梯，即最底层,只要一种，即已经站在原地
+        sum[0] = 1;
+        // 第1阶梯，是从0上来的，也只有一种
+        sum[1] = 1;
+        for (let i = 2; i < n; i++) {
+          sum[i] = sum[i - 1] + sum[i - 2]; // 从第二阶梯开始可以计算 前一个阶梯的总方式+ 前两个阶梯的总方式
+        }
+        return sum[n - 1];
+      }
+      // 优化，只需要 两个临时变量 存储 第 i-1的总方式 和 i-2的总方式即可
+      function palouti2(n) {
+        let sum = 0; // 存每个阶梯上来的方式总数
+        if (n <= 1) {
+          return 1;
+        }
+        // 第0阶梯，即最底层,只要一种，即已经站在原地 ，即 第2阶梯的前2个阶梯
+        let sum2 = 1;
+        // 第1阶梯，是从0上来的，也只有一种 ，即 第2阶梯的前1个阶梯
+        let sum1 = 1;
+        for (let i = 2; i < n; i++) {
+          sum[i] = sum1 + sum2; // 从第二阶梯开始可以计算 前一个阶梯的总方式+ 前两个阶梯的总方式
+          // 当进入下一阶梯时，此时的sum[i] 就变成了下一阶梯的 i-1阶梯，而此时的i-1就编程了下一阶梯的i-2
+          // 所以替换一下数据
+          sum2 = sum1;
+          sum1 = sum;
+        }
+        return sum;
+      }
+
+      // 买卖股票的最佳时机
+      function gupiao1(prices) {
+        let maxProfit = 0, // 最大收益
+          // 假设0位价格为历史最低
+          minPrice = prices[0];
+        // i从1开始
+        for (let i = 1; i < prices.length; i++) {
+          // 判断今天的价格是否比之前记录的更低 如果价格比历史更低，更新最低价
+          minPrice = Math.min(minPrice, prices[i]);
+          // 计算利润，找出最大利润（只能买卖一次，如果今天买入再卖出，则收益为 0）;否则将今天的收益跟历史的最大收益对比，更大，则存起来，否则只存历史最大的那只
+          maxProfit = Math.max(maxProfit, prices[i] - minPrice);
+        }
+        return maxProfit;
+      }
+
+      // 买卖股票的最佳时机 ||
+      function gupiao2(prices) {
+        const n = prices.length;
+        if (n === 1) {
+          return 0;
+        }
+        const sum = [];
+        sum[0] = [];
+        sum[0][0] = 0; // 第一天手里没有股票，表示没有买入
+        sum[0][1] = -prices[0]; // 第一天买入
+        for (let i = 1; i < n; i++) {
+          sum[i] = [];
+          // 从第二天开始
+          // 手里没有股票的收益
+          sum[i][0] = Math.max(sum[i - 1][1] + prices[i], sum[i - 1][0]);
+          sum[i][1] = Math.max(sum[i - 1][0] - prices[1], sum[i - 1][1]);
+        }
+        // 最后手里没有股票的利润肯定最大
+        return sum[n - 1][0];
+      } // 优化，可以使用两个变量分别表示 昨天手里有股票的利润和昨天手里没有股票的利润
+
+      // 最大子序和
+      function zixu(arr) {
+        let maxsum = arr[0]; // 最大子序和
+        let sum = 0; // 临时存储子序累加的值，每次累加一次，就跟maxsum做比较，判断是否更新maxsum，如果sum<0,则sum重置为0，舍去之前的累计并跳过本次循环
+        for (let i = 0; i < arr.length; i++) {
+          sum = sum + arr[i];
+          maxsum = Math.max(sum, maxsum);
+          if (sum < 0) {
+            sum = 0;
+          }
+        }
+        return maxsum;
+      }
+      // 动态规划 (上面也是动态对话，下面是简化版)
+      function zixu2(arr) {
+        let maxsum = arr[0]; // 最大子序和 ，假设目前第一个元素最大
+        let sum = 0; // 临时累计值
+        arr.forEach((x) => {
+          sum = Math.max(sum + x, x);
+          maxsum = Math.max(maxsum, sum);
+        });
+      }
+
+      // 打劫
+      function dajie(p) {
+        const sum = [];
+        const n = p.length;
+        if (n === 1) {
+          return p[0];
+        }
+        sum[0] = p[0]; // 打劫第一家的总金额
+        sum[1] = Math.max(p[0], p[1]); // 打劫第二家的总金额
+        for (let i = 2; i < n; i++) {
+          sum[i] = Math.max(sum[i - 2] + p[i], sum[i - 1]); // 打劫第三家能得到的最大金额
+        }
+        return sum[n - 1];
+      }
+      // 可以使用 两个变量分别存 sum[i-2] 和 sum[i-1] 这样就不需要数组了
+      function dajie2(p) {
+        let sum = 0;
+        let sum1 = 0;
+        let sum2 = 0;
+        const n = p.length;
+        if (n === 1) {
+          return p[0];
+        }
+        if (n === 2) {
+          return Math.max(p[0], p[1]);
+        }
+        sum2 = p[0]; // 打劫第一家的总金额,或者表示 当前家的前2家的金额
+        sum1 = Math.max(p[0], p[1]); // 打劫第二家的总金额，或者表示 当前家的前1家的金额
+        for (let i = 2; i < n; i++) {
+          sum = Math.max(sum2 + p[i], sum1); // 打劫第三家能得到的最大金额
+          sum1 = sum2;
+          sum2 = sum;
+        }
+        return sum;
+      }
+    </script>
+  </body>
+</html>

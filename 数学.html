@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>Fizz Buzz</h1>
+  <ul>
+    <li>迭代，联合判断，（if elseif else）先判断同时能被3和5整除，后判断能被3，5整除</li>
+    <li>字符串拼接，与上面的迭代一样，只不过在判断的内部采用字符串拼接的方式输出字符串，能够少些判断条件</li>
+    <li>哈希表，将字符串和数字组织成一个哈希表，然后数字的每个元素都去遍历一下哈希表，能被整除的，就拼接它们的字符串</li>
+  </ul>
+  <h1>计数质数</h1>
+  <ul>
+    <li>枚举: 每个元素x判断能否被 2 到 √x 整除（不需要判断 √x 后面的数字，因为 x = y * z）时间复杂度为O(n√n)</li>
+    <li>上面继续优化：如果x 是质数，则 2x 3x 都不是质数 可以直接删除 时间复杂度O(nloglogn)</li>
+  </ul>
+  <h1>3的幂</h1>
+  <ul>
+    <li>循环，每次都 / 3 到最后是否等于1</li>
+    <li>递归，与循环一样</li>
+    <li>3进制转换： 先把数字转换成3进制的字符串，如果是3的幂，那么这个字符串一定是一个1，和若干个0.</li>
+    <li>幂 = Math.log(某个数组x) / Math.log(3)  不准，有误差，但是是一种思维</li>
+  </ul>
+</body>
+</html>

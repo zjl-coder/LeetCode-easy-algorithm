@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>二叉树</h1>
+  <ul>
+    <li>
+      深度优先遍历
+      <ul>
+        <li><strong>前序遍历</strong> 访问根–>遍历左子树–>遍历右子树;  可以用来显示目录结构。</li>
+        <li><strong>中序遍历</strong> 遍历左子树–>访问根–>遍历右子树;  可以实现表达式树，在编译器底层很有用。</li>
+        <li><strong>后序遍历</strong> 遍历左子树–>遍历右子树–>访问根;  计算目录内的文件及其信息。</li>
+      </ul>
+    </li>
+    <li>
+      广度优先遍历
+      <ul>
+        <li><strong>广度遍历</strong> 按照层次一层层遍历;</li>
+      </ul>
+    </li>
+  </ul>
+  <div>二叉树的遍历要使用到 <strong>栈</strong> 和 <strong>队列</strong> 还有 <strong>递归</strong> 等</div>
+
+  <pre>
+    <code>
+      // 树的节点表示
+      {
+        value: '',
+        left: {},
+        right: {}
+      }
+    </code>
+  </pre>
+  <div>(a+b*c)-d/e，该表达式用二叉树表示如图：</div>
+  <img src="./二叉树.png" alt="" srcset="">
+  <pre>
+    <code>
+      var tree = {
+          value: "-",
+          left: {
+              value: '+',
+              left: {
+                  value: 'a',
+              },
+              right: {
+                  value: '*',
+                  left: {
+                      value: 'b',
+                  },
+                  right: {
+                      value: 'c',
+                  }
+              }
+          },
+          right: {
+              value: '/',
+              left: {
+                  value: 'd',
+              },
+              right: {
+                  value: 'e',
+              }
+          }
+      }
+    </code>
+  </pre>
+  <ul>
+    <strong>对该二叉树进行深度和广度遍历为：</strong>
+    <li>前序遍历：- + a * b c / d e</li>
+    <li>中序遍历：a + b * c - d / e</li>
+    <li>后序遍历：a b c * + d e / -</li>
+    <li>广度遍历：- + / a * d e b c</li>
+  </ul>
+  遍历二叉树有一个非递归特点，即根节点其实也是某一个左节点或者右节点，所以当遍历所有的左子树的时候，跟节点肯定会被遍历到，而右节点则入栈等待被遍历。
+  <script src="./二叉树.js"></script>
+</body>
+</html>
