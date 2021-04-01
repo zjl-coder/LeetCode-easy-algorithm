@@ -5,11 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="stylesheet" href="https://my-cdns.github.io/cdn/assets/prism.css" />
+    <script src="https://my-cdns.github.io/cdn/assets/prism.js"></script>
   </head>
   <body>
     <h1>链表</h1>
     <pre>
-    <code>
+    <code class="language-javascript">
       // js 表示为
       {
         value: "",
@@ -49,7 +51,7 @@
       <li> 
         递归： 每个递归函数只都返回翻转后的链的头地址（返回的都是同一个值，即原链的最后一个节点的地址）。然后在每个递归函数内的当前节点的下一个接下指向的就是跟翻转后的新链的最后一个节点是同一个节点（即地址相同）。将当前节点的下一个节点的下一个节点指向当前节点，当前节点就进入到新链的最后一个节点，然后将当前节点断开（next=null）,防止回环
         <pre>
-          <code>
+          <code class="language-javascript">
             // head 指向的是对象的地址，每个递归函数的head指向的是每个节点的地址
             function reverseList (head) {
               if (head == null || head.next == null) {
