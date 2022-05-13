@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1></h1>
+  <div>给你一个 <strong>升序排列</strong> 的数组 nums ，请你 <strong>原地</strong> 删除重复出现的元素，使每个元素 只出现一次 ，返回删除后数组的新长度。元素的 相对顺序 应该保持 一致 。</div>
+  <div>不要使用额外的空间，你必须在 <strong>原地 修改输入数组</strong> 并在使用 O(1) 额外空间的条件下完成。<strong>不改变数据长度length</strong></div>
+  <h5>解法关键：双指针，单循环。时间复杂度：线性阶O(n)</h5>
+  <div>快慢指针，慢指针指向可以替换数据的位置，快指针则遍历整个数据，并且对比快指针的当前述与快指针的n-1数是否相等，不相等，则是可以插入慢指针的地方。</div>
+  <pre>
+    <code>
+      nums = [1,2,3,4,5,5,5,5,6,6,7,7,7,8,9,9];
+      // 原因，当 slow 指针被数据被替换时，fast的数据并没有变化，如果 fast 的 下一个元素与当前fast 一样的话，并不会被替换到前面，那么 slow < = k < = fast 的 k 都是可比替换的位置，slow + 1 是安全的，因为fast 的值每次都已经备份到slow 然后双指针 + 1。
+      var removeDuplicates = function(nums) {
+          const len = nums.length;
+          if(len === 0 || len === 1) return len;
+          let slow = 1;
+          let fast = 1;
+          while(fast < len){
+              if(nums[fast] !== nums[fast-1]){
+                  nums[slow] = nums[fast];
+                  slow++
+              }
+              fast++;
+          }
+          return slow;
+      };
+    </code>
+  </pre>
+  <h5>解法关键：单指针，数组双循环。时间复杂度：线性对数阶 O(nlogN)</h5>
+  <div>对数组进行双循环，第一层是指针循环，第二层是向左移动一位，占用重复数据</div>
+  <h3>解法代码：</h3>
+  <pre>
+    <code>
+        var removeDuplicates = function(nums) {
+            const len = nums.length;
+            if(len === 0 || len === 1) return len;
+            let current = 0;
+            while(current < len -1 && nums[current] <= nums[current + 1]) {
+                if(nums[current] !== nums[current + 1]){
+                    current++;
+                } else {
+                    let j = current;
+                    while(j < len-1){
+                        nums[j] = nums[j+1] // 移动数组元素，占掉重复的元素
+                        j++
+                    }
+                    nums[j] = nums[0]-1; // 添加一个最小的数据,插入数组最后一位（nums[0]是数组最小的数据，nums[0]-1  一定比 num[0]还小）
+                }
+            }
+            return current + 1;
+        };
+    </code>
+  </pre>
+  <script>
+    var removeDuplicates = function(nums) {
+        const len = nums.length;
+        if(len === 1) return len -1;
+        let current = 0;
+        let next = 1;
+        while(current < len -1 && nums[current] <= nums[next]) {
+            if(nums[current] !== nums[next]){
+                current++;
+                next++;
+            } else {
+                let j = current;
+                while(j<len-1){
+                    nums[j] = nums[j+1]
+                    j++
+                }
+                nums[j] = nums[0]-1; // 添加一个最小的数据
+            }
+        }
+        return next;
+    };
+  </script>
+</body>
+</html>
