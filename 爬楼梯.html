@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>爬楼梯</h1>
+  假设你正在爬楼梯。需要 n 阶你才能到达楼顶。<br>
+
+  每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？
+  <h4>示例1</h4>
+  <pre>
+    <code>
+      输入：n = 2
+      输出：2
+      解释：有两种方法可以爬到楼顶。
+      1. 1 阶 + 1 阶
+      2. 2 阶
+    </code>
+  </pre>
+  <h4>示例2</h4>
+  <pre>
+    <code>
+      输入：n = 3
+      输出：3
+      解释：有三种方法可以爬到楼顶。
+      1. 1 阶 + 1 阶 + 1 阶
+      2. 1 阶 + 2 阶
+      3. 2 阶 + 1 阶
+    </code>
+  </pre>
+
+  <h2>分析</h2>
+  <pre>
+    <code>
+      0表示当前阶梯，是直接跨2部上来的，1表示是跨一步上来的
+
+      当前阶梯 跨两步上来的 这种情况下的方式是  n-2的阶梯上来的方式
+      当前阶梯 跨一步上来的 这种情况下的方式是  n-1的阶梯上来的方式
+
+      当前的方式 则是  sum[n-2] + sum [n-1];
+
+      var climbStairs = function(n) {
+          if(n===0)return 0;
+          if(n===1)return 1;
+          if(n===2)return 2;
+          const sum  = [0,1,2];
+          for(let i=3;i <= n; i++){
+              sum[i] = sum[i-1]+sum[i-2];
+          }
+          return sum[n]
+      };
+
+    </code>
+  </pre>
+
+  <a href="./动态规划2.html">动态规划2</a>
+</body>
+</html>
