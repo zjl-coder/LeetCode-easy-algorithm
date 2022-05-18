@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>打家劫舍</h1>
+  <pre>
+    你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。
+
+    给定一个代表每个房屋存放金额的非负整数数组，计算你 不触动警报装置的情况下 ，一夜之内能够偷窃到的最高金额。
+  </pre>
+  <h3>示例1</h3>
+  <pre>
+    输入：[1,2,3,1]
+    输出：4
+    解释：偷窃 1 号房屋 (金额 = 1) ，然后偷窃 3 号房屋 (金额 = 3)。
+         偷窃到的最高金额 = 1 + 3 = 4 。
+  </pre>
+  <h3>解法： 动态规划</h3>
+  <pre>
+    <code>
+      n 只有两种情况，偷或不偷
+      偷，则 n-1 不偷，那么 n-2的 sum + n 就是当前的sum：sum = sum[n-2] + n
+      不偷, 则当前的sum = n-1的sum：sum = sum[n-1]
+
+      决定当前偷不偷，取决于偷完之后 sum[n] 是否比 sum[n-1]更多 
+
+      var rob = function(nums) {
+        const len = nums.length;
+        const sum = [nums[0], Math.max(nums[0], nums[1])];
+        for(let i = 2; i < len; i++){
+            sum.push(Math.max(sum[i-2]+nums[i], sum[i-1]));
+        }
+        return sum[len-1]
+      };
+    </code>
+  </pre>
+</body>
+</html>
